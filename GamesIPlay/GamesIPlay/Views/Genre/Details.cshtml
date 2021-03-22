@@ -1,0 +1,30 @@
+@model Genre
+@{
+    ViewBag.Title = ViewBag.Action + " Genre";
+}
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="list-header">
+    <h1>@ViewBag.Title <span style="color: #ededed;">@Model.Name</span></h1>
+</div>
+
+<form asp-action="Update" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control">
+    </div>
+
+    <input type="hidden" asp-for="GenreID" />
+
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-success">@ViewBag.Action</button>
+        <a asp-action="List" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</form>

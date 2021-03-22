@@ -1,0 +1,23 @@
+@model List<Genre>
+@{
+    ViewBag.Title = "Genres";
+}
+
+<div class="list-header">
+    <h1>Genres
+    </h1>
+    <a asp-action="Add" class="btn btn-outline-danger">Add new Genre +</a>
+</div>
+
+
+@foreach (var genre in @Model)
+{
+    <div class="card">
+        <a asp-controller="Genre" asp-action="Update" asp-route-id="@genre.GenreID">
+            <div class="card-body">
+                @genre.Name
+            </div>
+        </a>
+        <a type="button" class="btn-close btn-close-white" aria-label="Close" asp-controller="Genre" asp-action="Delete" asp-route-id="@genre.GenreID"></a>
+    </div>
+}

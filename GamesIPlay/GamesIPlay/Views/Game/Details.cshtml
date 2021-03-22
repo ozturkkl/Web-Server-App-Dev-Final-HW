@@ -1,0 +1,46 @@
+@model Game
+@{
+    ViewBag.Title = ViewBag.Action + " Game";
+}
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="list-header">
+    <h1>@ViewBag.Title <span style="color: #ededed;">@Model.Name</span></h1>
+</div>
+
+<form asp-action="Update" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="GenreID">Genre</label>
+        <select asp-for="GenreID" asp-items="@(new SelectList(ViewBag.Genres,
+            "GenreID", "Name",
+            Model.GenreID.ToString()))" class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control">
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control">
+    </div>
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" asp-for="Favorite">
+        <label class="form-check-label" asp-for="Favorite">Favorite</label>
+    </div>
+
+    <input type="hidden" asp-for="GameID" />
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-success">@ViewBag.Action</button>
+        <a asp-action="List" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</form>

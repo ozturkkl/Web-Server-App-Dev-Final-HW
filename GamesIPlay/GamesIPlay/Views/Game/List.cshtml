@@ -1,0 +1,55 @@
+@model GameListViewModel
+@{
+    ViewBag.Title = "My Games";
+}
+
+<div class="list-header">
+    <h1>My Games
+    </h1>
+    <a asp-action="Add" class="btn btn-outline-danger">Add new Game +</a>
+</div>
+
+<div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-bottom: 20px;">
+    <a asp-controller="Game" asp-action="List" asp-route-id="All"
+        class="btn btn-outline-secondary @Model.CheckActiveGenre("All")">
+        All Genres
+    </a>
+
+    @foreach (Genre g in Model.Genres)
+    {
+        <a asp-controller="Game" asp-action="List" asp-route-id="@g.Name"
+            class="btn btn-outline-secondary @Model.CheckActiveGenre(g.Name)">
+            @g.Name
+        </a>
+    }
+</div>
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    @foreach (var game in Model.Games)
+    {
+        <div class="accordion-item @Model.CheckFavorite(game)">
+            <h2 class="accordion-header" id="flush-heading@game.GameID">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-@game.GameID" aria-expanded="false" aria-controls="flush-@game.GameID">
+                    <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+                    <i class="fa fa-heart-o" aria-hidden="true" style="color: red;"></i>
+                    <p>@game.Name</p><span class="badge rounded-pill bg-dark"
+                        style="margin-top: -25px; margin-left: 10px;">@Model.Genres.Find(genre => genre.GenreID ==
+                    game.GenreID).Name</span>
+                </button>
+            </h2>
+
+            <div id="flush-@game.GameID" class="accordion-collapse collapse" aria-labelledby="flush-heading@game.GameID"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    @game.Description</div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a asp-controller="Game" asp-action="Update" asp-route-id="@game.GameID"
+                        class="btn btn-outline-secondary">Edit</a>
+                    <a asp-controller="Game" asp-action="Delete" asp-route-id="@game.GameID"
+                        class="btn btn-outline-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
